@@ -29,7 +29,7 @@ public class SingularOperation extends FinalOperation<SingularOperator> {
 
     @Override
     public boolean apply(Object o) {
-        Object operandFieldValue = operand.getFieldValue(o);
+        Object operandFieldValue = operand.getValue(o);
         switch (operator) {
             case NULL:
                 return operandFieldValue == null;
