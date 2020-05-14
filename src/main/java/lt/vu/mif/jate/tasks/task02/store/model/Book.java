@@ -11,6 +11,7 @@ import org.json.JSONArray;
 
 import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,47 +19,27 @@ import java.util.Set;
  *
  * @author Andrius
  */
-public class Book extends Item {
+public class Book extends BookMovie {
 
     @Searchable(field = Store.SUBTITLE_FIELD)
     private final String subtitle;
     @Searchable(field = Store.PUBLISHER_FIELD)
     private final String publisher;
     private final Integer pages;
-    private final Double initialRating;
-    private final Integer initialRatingCount;
-    @Searchable(field = Store.CATEGORY_FIELD)
-    private final Set<String> categories;
+
     @Searchable(field = Store.AUTHOR_FIELD)
     private final Set<String> authors;
 
-    private Book(Book.Builder builder) {
-        super(builder.ID, builder.title, builder.description);
+    protected Book(Book.Builder builder) {
+        super(builder);
         this.subtitle = builder.subtitle;
         this.publisher = builder.publisher;
         this.pages = builder.pages;
-        this.initialRating = builder.initialRating;
-        this.initialRatingCount = builder.initialRatingCount;
-        this.categories = builder.categories;
         this.authors = builder.authors;
     }
 
     public String getSubtitle() {
         return subtitle;
-    }
-
-    @Override
-    public Double getRating() {
-        return initialRating;
-    }
-
-    @Override
-    public Integer getRatingsCount() {
-        return initialRatingCount;
-    }
-
-    public Set<String> getCategories() {
-        return categories;
     }
 
     public Set<String> getAuthors() {
@@ -73,44 +54,31 @@ public class Book extends Item {
         return publisher;
     }
 
-    public static class Builder {
+    public static class Builder extends BookMovie.Builder<Book> {
 
-        private final BigInteger ID;
-        private final String title;
-        @Searchable(field = Store.DESCRIPTION_FIELD)
-        private final String description;
-        private final Set<String> categories = new HashSet<>();
         private final Set<String> authors = new HashSet<>();
         private String subtitle;
-        private Double initialRating;
-        private Integer initialRatingCount;
         private String publisher;
         private Integer pages;
 
-        public Builder(BigInteger ID, String title, String description) {
-            this.ID = ID;
-            this.title = title;
-            this.description = description;
+        public Builder(BigInteger id, String title, String description) {
+            super(id, title, description);
+        }
+
+        public Builder category(String category) {
+            return (Builder) super.category(category);
+        }
+
+        public Builder categories(JSONArray categories) {
+            return (Builder) super.categories(categories.toList());
+        }
+
+        public Builder rating(double initialRating, int initialRatingCount) {
+            return (Builder) super.rating(initialRating, initialRatingCount);
         }
 
         public Builder subtitle(String subtitle) {
             this.subtitle = subtitle;
-            return this;
-        }
-
-        public Builder category(String category) {
-            categories.add(category);
-            return this;
-        }
-
-        public Builder categories(JSONArray categoryJsonArray) {
-            for (Object category : categoryJsonArray) categories.add(category.toString());
-            return this;
-        }
-
-        public Builder rating(double initialRating, int initialRatingCount) {
-            this.initialRating = initialRating;
-            this.initialRatingCount = initialRatingCount;
             return this;
         }
 

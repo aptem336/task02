@@ -5,79 +5,38 @@
  */
 package lt.vu.mif.jate.tasks.task02.store.model;
 
-import lt.vu.mif.jate.tasks.task02.search.Searchable;
-import lt.vu.mif.jate.tasks.task02.store.Store;
-
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Movie builder.
  *
  * @author Andrius
  */
-public class Movie extends Item {
+public class Movie extends BookMovie {
 
-    private final double initialRating;
-    private final Integer initialRatingCount;
-    @Searchable(field = Store.CATEGORY_FIELD)
-    private final Set<String> categories;
-
-    private Movie(Builder builder) {
-        super(builder.ID, builder.title, builder.description);
-        this.initialRating = builder.initialRating;
-        this.initialRatingCount = builder.initialRatingCount;
-        this.categories = builder.categories;
+    public Movie(BookMovie.Builder<? extends BookMovie> builder) {
+        super(builder);
     }
 
-    @Override
-    public Double getRating() {
-        return initialRating;
-    }
+    public static class Builder extends BookMovie.Builder<Movie> {
 
-    @Override
-    public Integer getRatingsCount() {
-        return initialRatingCount;
-    }
-
-    public Set<String> getCategories() {
-        return categories;
-    }
-
-    public static class Builder {
-
-        private final BigInteger ID;
-        private final String title;
-        @Searchable(field = Store.DESCRIPTION_FIELD)
-        private final String description;
-        private final Set<String> categories = new HashSet<>();
-        private double initialRating;
-        private Integer initialRatingCount;
-
-        public Builder(BigInteger ID, String title, String description) {
-            this.ID = ID;
-            this.title = title;
-            this.description = description;
+        public Builder(BigInteger id, String title, String description) {
+            super(id, title, description);
         }
 
         public Builder category(String category) {
-            categories.add(category);
-            return this;
+            return (Builder) super.category(category);
         }
 
-        public Builder categoryPath(String categoryPath) {
-            List<String> categories = Arrays.asList(categoryPath.split("/"));
-            this.categories.addAll(categories.subList(1, categories.size()));
-            return this;
+        public Builder categories(String categoryPath) {
+            List<Object> categories = Arrays.asList(categoryPath.split("/"));
+            return (Builder) super.categories(categories.subList(1, categories.size()));
         }
 
         public Builder rating(double initialRating, int initialRatingCount) {
-            this.initialRating = initialRating;
-            this.initialRatingCount = initialRatingCount;
-            return this;
+            return (Builder) super.rating(initialRating, initialRatingCount);
         }
 
         public Movie build() {
