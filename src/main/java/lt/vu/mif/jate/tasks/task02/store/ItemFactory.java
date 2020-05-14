@@ -10,6 +10,8 @@ import lt.vu.mif.jate.tasks.task02.store.model.Movie;
 import lt.vu.mif.jate.tasks.task02.store.model.WrongItemFormatException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 /**
  * @author Andrius
  */
@@ -41,8 +43,8 @@ public class ItemFactory {
         return new Movie.Builder(movieJsonObject.getBigInteger("id"),
                 movieJsonObject.getString("name"),
                 movieJsonObject.getString("longDescription"))
+                .categories(movieJsonObject.getString("categoryPath"))
                 .rating(movieJsonObject.getDouble("customerRating"), movieJsonObject.getInt("numReviews"))
-                .categoryPath(movieJsonObject.getString("categoryPath"))
                 .build();
     }
 }

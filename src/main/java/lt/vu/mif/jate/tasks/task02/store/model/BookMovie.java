@@ -51,7 +51,7 @@ public class BookMovie extends Item {
             return this;
         }
 
-        public Builder<I> categories(List<Object> categories) {
+        protected Builder<I> categories(List<Object> categories) {
             for (Object category : categories) category(category.toString());
             return this;
         }
