@@ -14,7 +14,7 @@ public class Literal implements Operand {
     private final String name;
 
     @Override
-    public Object getValue(Object object) {
+    public Object getValue(Object item) {
         return name;
     }
 
