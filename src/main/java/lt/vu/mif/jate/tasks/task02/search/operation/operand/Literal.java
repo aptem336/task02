@@ -12,15 +12,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Literal implements Operand {
 
-    private final String value;
+    private final String name;
 
     @Override
-    public Object getFieldValue(Object object) {
-        return getValue();
+    public Object getValue(Object object) {
+        return getName();
     }
 
     @Override
     public String toString() {
-        return getValue();
+        return getName();
     }
 }

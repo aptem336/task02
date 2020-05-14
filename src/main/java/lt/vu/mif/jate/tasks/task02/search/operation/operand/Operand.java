@@ -6,7 +6,7 @@ package lt.vu.mif.jate.tasks.task02.search.operation.operand;
  */
 public interface Operand {
 
-    String getValue();
+    String getName();
 
-    Object getFieldValue(Object object);
+    Object getValue(Object object);
 }
