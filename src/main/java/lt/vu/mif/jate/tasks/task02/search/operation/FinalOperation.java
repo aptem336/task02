@@ -6,16 +6,16 @@ import lt.vu.mif.jate.tasks.task02.search.operation.operator.Operator;
 
 /**
  * Leaf Operation.
- * @author valdo
+ *
  * @param <O> operator class.
+ * @author valdo
  */
 @Getter
 @RequiredArgsConstructor
 public abstract class FinalOperation<O extends Operator> implements Operation {
-    
+
     /**
      * Operation operator.
      */
-    private final O operator;
-    
+    public final O operator;
 }
