@@ -10,11 +10,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Item class.
- *
- * @author valdo
- */
 @Getter
 @RequiredArgsConstructor
 public abstract class Item implements Comparable<Item> {

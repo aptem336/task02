@@ -9,11 +9,6 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Movie builder.
- *
- * @author Andrius
- */
 public class Movie extends BookMovie {
 
     public Movie(BookMovie.Builder<? extends BookMovie> builder) {
