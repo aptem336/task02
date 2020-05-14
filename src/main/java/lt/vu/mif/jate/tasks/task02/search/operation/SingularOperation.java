@@ -6,24 +6,36 @@ import lt.vu.mif.jate.tasks.task02.search.operation.operator.SingularOperator;
 
 /**
  * Singular Operation that takes one operand, i.e. isnull(x)
+ *
  * @author valdo
  */
 @Getter
 public class SingularOperation extends FinalOperation<SingularOperator> {
-    
     /**
      * Singular operand.
      */
     private final Operand operand;
-    
+
     /**
      * Constructor.
+     *
      * @param operator singular operator.
-     * @param opd single operand.
+     * @param operand  single operand.
      */
-    public SingularOperation(final SingularOperator operator, final Operand opd) {
+    public SingularOperation(final SingularOperator operator, final Operand operand) {
         super(operator);
-        this.operand = opd;
+        this.operand = operand;
     }
-    
+
+    @Override
+    public boolean apply(Object o) {
+        Object operandFieldValue = operand.getFieldValue(o);
+        switch (operator) {
+            case NULL:
+                return operandFieldValue == null;
+            case EMPTY:
+                return operandFieldValue != null && operandFieldValue.equals("");
+        }
+        return false;
+    }
 }
