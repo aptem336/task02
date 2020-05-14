@@ -1,13 +1,22 @@
 package lt.vu.mif.jate.tasks.task02.store;
 
-import java.io.InputStream;
-import java.util.Collection;
 import lombok.Getter;
 import lt.vu.mif.jate.tasks.task02.search.SearchManager;
 import lt.vu.mif.jate.tasks.task02.store.model.Item;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Top level domain store class.
+ *
  * @author valdo
  */
 @Getter
@@ -22,19 +31,33 @@ public class Store extends SearchManager<Item> {
     public static final String CATEGORY_FIELD = "CATEGORY";
     public static final String AUTHOR_FIELD = "AUTHOR";
     public static final String PUBLISHER_FIELD = "PUBLISHER";
+    public final Collection<Item> items = new HashSet<>();
 
     /**
      * Load objects from the input stream.
+     *
      * @param is input stream.
      */
     public final void load(final InputStream is) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            String str;
+            while ((str = bufferedReader.readLine()) != null) {
+                stringBuilder.append(str);
+            }
+        } catch (IOException ignored) {
+        }
+        new JSONArray(stringBuilder.toString()).forEach(jsonObject ->
+                getSearchItems().add(ItemFactory.createItem((JSONObject) jsonObject)));
     }
 
     @Override
     protected Collection<Item> getSearchItems() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return items;
     }
 
-    
+    public Collection<Item> getItems() {
+        return getSearchItems();
+    }
 }
