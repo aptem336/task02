@@ -26,8 +26,7 @@ public class Movie extends BookMovie {
         }
 
         public Builder categories(String categoryPath) {
-            List<Object> categories = Arrays.asList(categoryPath.split("/"));
-            return (Builder) super.categories(categories.subList(1, categories.size()));
+            return (Builder) super.categories(Arrays.asList(categoryPath.split("/")));
         }
 
         public Builder rating(double initialRating, int initialRatingCount) {
