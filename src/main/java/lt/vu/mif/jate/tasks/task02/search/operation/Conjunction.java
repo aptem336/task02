@@ -8,8 +8,7 @@ package lt.vu.mif.jate.tasks.task02.search.operation;
 public class Conjunction extends Junction {
 
     @Override
-    public boolean execute(Object o) {
-        for (Operation operation : getOperations()) if (!operation.execute(o)) return false;
-        return true;
+    public boolean apply(Object o) {
+        return getOperations().stream().noneMatch(operation -> !operation.apply(o));
     }
 }
