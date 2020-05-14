@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
  *
  * @author valdo
  */
-@Getter
 @RequiredArgsConstructor
 public class Literal implements Operand {
 
@@ -16,11 +15,11 @@ public class Literal implements Operand {
 
     @Override
     public Object getValue(Object object) {
-        return getName();
+        return name;
     }
 
     @Override
     public String toString() {
-        return getName();
+        return name;
     }
 }

@@ -2,7 +2,6 @@ package lt.vu.mif.jate.tasks.task02.search.operation.operand;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lt.vu.mif.jate.tasks.task02.search.SearchManager;
 import lt.vu.mif.jate.tasks.task02.search.Searchable;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -18,7 +17,7 @@ import java.security.PrivilegedAction;
 @RequiredArgsConstructor
 public class Field implements Operand {
 
-    private final String name;
+    private final String value;
 
     @Override
     public Object getValue(Object item) {
@@ -29,7 +28,7 @@ public class Field implements Operand {
                     Searchable searchable = field.getAnnotation(Searchable.class);
                     if (searchable != null) {
                         String searchableField = searchable.field();
-                        if (searchableField.equals(name)) {
+                        if (searchableField.equals(value)) {
                             return fieldValue;
                         }
                     }
